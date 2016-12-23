@@ -20,6 +20,8 @@ import io.gs2.auth.Gs2AuthClient;
 import io.gs2.model.IGs2Credential;
 import io.gs2.stamina.control.ChangeStaminaRequest;
 import io.gs2.stamina.control.ChangeStaminaResult;
+import io.gs2.stamina.control.ConsumeStaminaRequest;
+import io.gs2.stamina.control.ConsumeStaminaResult;
 import io.gs2.stamina.control.CreateStaminaPoolRequest;
 import io.gs2.stamina.control.CreateStaminaPoolResult;
 import io.gs2.stamina.control.DeleteStaminaPoolRequest;
@@ -242,5 +244,31 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				body.toString());
 		post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 		return doRequest(post, ChangeStaminaResult.class);
+	}
+
+	/**
+	 * スタミナ値を消費させる。<br>
+	 * <br>
+	 * changeStamina() の回復ができないAPIです。<br>
+	 * GS2-Identifier のセキュリティポリシー機能を使って、消費と回復を明確にコントロールしたい場合に使用してください。<br>
+	 * <br>
+	 * accessToken には {@link Gs2AuthClient#login(io.gs2.auth.control.LoginRequest)} でログインして取得したアクセストークンを指定してください。<br>
+	 * 
+	 * @param request リクエストパラメータ
+	 * @return 増減結果
+	 */
+	public ConsumeStaminaResult consumeStamina(ConsumeStaminaRequest request) {
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+				.put("variation", request.getVariation())
+				.put("maxValue", request.getMaxValue());
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + request.getStaminaPoolName() + "/stamina/consume", 
+				credential, 
+				ENDPOINT,
+				ConsumeStaminaRequest.Constant.MODULE, 
+				ConsumeStaminaRequest.Constant.FUNCTION,
+				body.toString());
+		post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
+		return doRequest(post, ConsumeStaminaResult.class);
 	}
 }
