@@ -259,7 +259,8 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 */
 	public ConsumeStaminaResult consumeStamina(ConsumeStaminaRequest request) {
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("variation", request.getVariation());
+				.put("variation", request.getVariation())
+				.put("maxValue", request.getMaxValue());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + request.getStaminaPoolName() + "/stamina/consume", 
 				credential, 

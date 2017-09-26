@@ -20,6 +20,8 @@ public class ConsumeStaminaRequest extends Gs2UserRequest<ConsumeStaminaRequest>
 	String staminaPoolName;
 	/** スタミナの消費量 */
 	Integer variation;
+	/** スタミナの最大量 */
+	Integer maxValue;
 	
 	/**
 	 * スタミナプール名を取得。
@@ -58,7 +60,7 @@ public class ConsumeStaminaRequest extends Gs2UserRequest<ConsumeStaminaRequest>
 	public Integer getVariation() {
 		return variation;
 	}
-	
+
 	/**
 	 * スタミナの消費量を設定。
 	 * 
@@ -67,7 +69,7 @@ public class ConsumeStaminaRequest extends Gs2UserRequest<ConsumeStaminaRequest>
 	public void setVariation(Integer variation) {
 		this.variation = variation;
 	}
-	
+
 	/**
 	 * スタミナの消費量を設定。
 	 * 
@@ -76,6 +78,35 @@ public class ConsumeStaminaRequest extends Gs2UserRequest<ConsumeStaminaRequest>
 	 */
 	public ConsumeStaminaRequest withVariation(Integer variation) {
 		setVariation(variation);
+		return this;
+	}
+
+	/**
+	 * スタミナの最大量を取得。
+	 * 
+	 * @return スタミナの最大量
+	 */
+	public Integer getMaxValue() {
+		return maxValue;
+	}
+
+	/**
+	 * スタミナの最大量を設定。
+	 * 
+	 * @param maxValue スタミナの最大量
+	 */
+	public void setMaxValue(Integer maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	/**
+	 * スタミナの最大量を設定。
+	 * 
+	 * @param maxValue スタミナの最大量
+	 * @return this
+	 */
+	public ConsumeStaminaRequest withMaxValue(Integer maxValue) {
+		setMaxValue(maxValue);
 		return this;
 	}
 }

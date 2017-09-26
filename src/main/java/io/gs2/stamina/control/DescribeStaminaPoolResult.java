@@ -2,6 +2,8 @@ package io.gs2.stamina.control;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.gs2.stamina.model.StaminaPool;
 
 /**
@@ -10,6 +12,7 @@ import io.gs2.stamina.model.StaminaPool;
  * @author Game Server Services, Inc.
  *
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class DescribeStaminaPoolResult {
 
 	/** スタミナプール一覧 */
