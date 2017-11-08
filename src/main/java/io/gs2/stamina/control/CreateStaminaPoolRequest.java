@@ -1,13 +1,28 @@
+/*
+ * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
 package io.gs2.stamina.control;
 
-import io.gs2.control.Gs2BasicRequest;
+import org.json.JSONObject;
+import java.util.List;
 import io.gs2.stamina.Gs2Stamina;
+import io.gs2.control.Gs2BasicRequest;
 
 /**
- * スタミナプールの作成リクエスト。
- * 
  * @author Game Server Services, Inc.
- *
  */
 @SuppressWarnings("serial")
 public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolRequest> {
@@ -16,37 +31,70 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 		public static final String FUNCTION = "CreateStaminaPool";
 	}
 
-	/** 名前 */
-	String name;
-	/** 説明 */
-	String description;
-	/** サービスクラス */
-	String serviceClass;
-	/** スタミナの回復速度 */
-	Integer increaseInterval;
+	/** スタミナの回復速度(秒) */
+	private Integer increaseInterval;
+
+	/** スタミナプールの名前 */
+	private String name;
+
+	/** スタミナプールのサービスクラス */
+	private String serviceClass;
+
+	/** スタミナプールの説明 */
+	private String description;
+
 
 	/**
-	 * 名前を取得。
-	 * 
-	 * @return 名前
+	 * スタミナの回復速度(秒)を取得
+	 *
+	 * @return スタミナの回復速度(秒)
+	 */
+	public Integer getIncreaseInterval() {
+		return increaseInterval;
+	}
+
+	/**
+	 * スタミナの回復速度(秒)を設定
+	 *
+	 * @param increaseInterval スタミナの回復速度(秒)
+	 */
+	public void setIncreaseInterval(Integer increaseInterval) {
+		this.increaseInterval = increaseInterval;
+	}
+
+	/**
+	 * スタミナの回復速度(秒)を設定
+	 *
+	 * @param increaseInterval スタミナの回復速度(秒)
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withIncreaseInterval(Integer increaseInterval) {
+		setIncreaseInterval(increaseInterval);
+		return this;
+	}
+
+	/**
+	 * スタミナプールの名前を取得
+	 *
+	 * @return スタミナプールの名前
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
-	 * 名前を設定。
-	 * 
-	 * @param name 名前
+	 * スタミナプールの名前を設定
+	 *
+	 * @param name スタミナプールの名前
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
-	 * 名前を設定。
-	 * 
-	 * @param name 名前
+	 * スタミナプールの名前を設定
+	 *
+	 * @param name スタミナプールの名前
 	 * @return this
 	 */
 	public CreateStaminaPoolRequest withName(String name) {
@@ -55,56 +103,27 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 	}
 
 	/**
-	 * 説明を取得。
-	 * 
-	 * @return 説明
-	 */
-	public String getDescription() {
-		return description;
-	}
-	
-	/**
-	 * 説明を設定。
-	 * 
-	 * @param description 説明
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	/**
-	 * 説明を設定。
-	 * 
-	 * @param description 説明
-	 * @return this
-	 */
-	public CreateStaminaPoolRequest withDescription(String description) {
-		setDescription(description);
-		return this;
-	}
-
-	/**
-	 * サービスクラスを取得。
-	 * 
-	 * @return サービスクラス
+	 * スタミナプールのサービスクラスを取得
+	 *
+	 * @return スタミナプールのサービスクラス
 	 */
 	public String getServiceClass() {
 		return serviceClass;
 	}
-	
+
 	/**
-	 * サービスクラスを設定。
-	 * 
-	 * @param serviceClass サービスクラス
+	 * スタミナプールのサービスクラスを設定
+	 *
+	 * @param serviceClass スタミナプールのサービスクラス
 	 */
 	public void setServiceClass(String serviceClass) {
 		this.serviceClass = serviceClass;
 	}
-	
+
 	/**
-	 * サービスクラスを設定。
-	 * 
-	 * @param serviceClass サービスクラス
+	 * スタミナプールのサービスクラスを設定
+	 *
+	 * @param serviceClass スタミナプールのサービスクラス
 	 * @return this
 	 */
 	public CreateStaminaPoolRequest withServiceClass(String serviceClass) {
@@ -113,32 +132,32 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 	}
 
 	/**
-	 * スタミナの回復速度を取得。
-	 * 
-	 * @return スタミナの回復速度
+	 * スタミナプールの説明を取得
+	 *
+	 * @return スタミナプールの説明
 	 */
-	public Integer getIncreaseInterval() {
-		return increaseInterval;
+	public String getDescription() {
+		return description;
 	}
-	
+
 	/**
-	 * スタミナの回復速度を設定。
-	 * 
-	 * @param increaseInterval スタミナの回復速度
+	 * スタミナプールの説明を設定
+	 *
+	 * @param description スタミナプールの説明
 	 */
-	public void setIncreaseInterval(Integer increaseInterval) {
-		this.increaseInterval = increaseInterval;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	
+
 	/**
-	 * スタミナの回復速度を設定。
-	 * 
-	 * @param increaseInterval スタミナの回復速度
+	 * スタミナプールの説明を設定
+	 *
+	 * @param description スタミナプールの説明
 	 * @return this
 	 */
-	public CreateStaminaPoolRequest withIncreaseInterval(Integer increaseInterval) {
-		setIncreaseInterval(increaseInterval);
+	public CreateStaminaPoolRequest withDescription(String description) {
+		setDescription(description);
 		return this;
 	}
-	
+
 }

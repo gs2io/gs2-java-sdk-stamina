@@ -1,13 +1,28 @@
+/*
+ * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
 package io.gs2.stamina.control;
 
-import io.gs2.control.Gs2UserRequest;
+import org.json.JSONObject;
+import java.util.List;
 import io.gs2.stamina.Gs2Stamina;
+import io.gs2.control.Gs2UserRequest;
 
 /**
- * スタミナの操作リクエスト。
- * 
  * @author Game Server Services, Inc.
- *
  */
 @SuppressWarnings("serial")
 public class ChangeStaminaRequest extends Gs2UserRequest<ChangeStaminaRequest> {
@@ -15,38 +30,42 @@ public class ChangeStaminaRequest extends Gs2UserRequest<ChangeStaminaRequest> {
 	public static class Constant extends Gs2Stamina.Constant {
 		public static final String FUNCTION = "ChangeStamina";
 	}
-	
-	/** スタミナプール名 */
-	String staminaPoolName;
-	/** スタミナの増減量 */
-	Integer variation;
+
+	/** スタミナプールの名前を指定します。 */
+	private String staminaPoolName;
+
+	/** スタミナを回復する際に最大値を超えて回復するか */
+	private Boolean overflow;
+
 	/** スタミナの最大値 */
-	Integer maxValue;
-	/** スタミナの最大値を超えることを許容するか */
-	Boolean overflow;
-	
+	private Integer maxValue;
+
+	/** スタミナの増減量 */
+	private Integer variation;
+
+
 	/**
-	 * スタミナプール名を取得。
-	 * 
-	 * @return スタミナプール名
+	 * スタミナプールの名前を指定します。を取得
+	 *
+	 * @return スタミナプールの名前を指定します。
 	 */
 	public String getStaminaPoolName() {
 		return staminaPoolName;
 	}
-	
+
 	/**
-	 * スタミナプール名を設定。
-	 * 
-	 * @param staminaPoolName スタミナプール名
+	 * スタミナプールの名前を指定します。を設定
+	 *
+	 * @param staminaPoolName スタミナプールの名前を指定します。
 	 */
 	public void setStaminaPoolName(String staminaPoolName) {
 		this.staminaPoolName = staminaPoolName;
 	}
-	
+
 	/**
-	 * スタミナプール名を設定。
-	 * 
-	 * @param staminaPoolName スタミナプール名
+	 * スタミナプールの名前を指定します。を設定
+	 *
+	 * @param staminaPoolName スタミナプールの名前を指定します。
 	 * @return this
 	 */
 	public ChangeStaminaRequest withStaminaPoolName(String staminaPoolName) {
@@ -55,55 +74,55 @@ public class ChangeStaminaRequest extends Gs2UserRequest<ChangeStaminaRequest> {
 	}
 
 	/**
-	 * スタミナの増減量を取得。
-	 * 
-	 * @return スタミナの増減量
+	 * スタミナを回復する際に最大値を超えて回復するかを取得
+	 *
+	 * @return スタミナを回復する際に最大値を超えて回復するか
 	 */
-	public Integer getVariation() {
-		return variation;
+	public Boolean getOverflow() {
+		return overflow;
 	}
-	
+
 	/**
-	 * スタミナの増減量を設定。
-	 * 
-	 * @param variation スタミナの増減量
+	 * スタミナを回復する際に最大値を超えて回復するかを設定
+	 *
+	 * @param overflow スタミナを回復する際に最大値を超えて回復するか
 	 */
-	public void setVariation(Integer variation) {
-		this.variation = variation;
+	public void setOverflow(Boolean overflow) {
+		this.overflow = overflow;
 	}
-	
+
 	/**
-	 * スタミナの増減量を設定。
-	 * 
-	 * @param variation スタミナの増減量
+	 * スタミナを回復する際に最大値を超えて回復するかを設定
+	 *
+	 * @param overflow スタミナを回復する際に最大値を超えて回復するか
 	 * @return this
 	 */
-	public ChangeStaminaRequest withVariation(Integer variation) {
-		setVariation(variation);
+	public ChangeStaminaRequest withOverflow(Boolean overflow) {
+		setOverflow(overflow);
 		return this;
 	}
 
 	/**
-	 * スタミナの最大値を取得。
-	 * 
+	 * スタミナの最大値を取得
+	 *
 	 * @return スタミナの最大値
 	 */
 	public Integer getMaxValue() {
 		return maxValue;
 	}
-	
+
 	/**
-	 * スタミナの最大値を設定。
-	 * 
+	 * スタミナの最大値を設定
+	 *
 	 * @param maxValue スタミナの最大値
 	 */
 	public void setMaxValue(Integer maxValue) {
 		this.maxValue = maxValue;
 	}
-	
+
 	/**
-	 * スタミナの最大値を設定。
-	 * 
+	 * スタミナの最大値を設定
+	 *
 	 * @param maxValue スタミナの最大値
 	 * @return this
 	 */
@@ -113,31 +132,32 @@ public class ChangeStaminaRequest extends Gs2UserRequest<ChangeStaminaRequest> {
 	}
 
 	/**
-	 * スタミナの最大値を超えることを許容するかを取得。
-	 * 
-	 * @return スタミナの最大値を超えることを許容するか
+	 * スタミナの増減量を取得
+	 *
+	 * @return スタミナの増減量
 	 */
-	public Boolean getOverflow() {
-		return overflow;
+	public Integer getVariation() {
+		return variation;
 	}
-	
+
 	/**
-	 * スタミナの最大値を超えることを許容するかを設定。
-	 * 
-	 * @param overflow スタミナの最大値を超えることを許容するか
+	 * スタミナの増減量を設定
+	 *
+	 * @param variation スタミナの増減量
 	 */
-	public void setOverflow(Boolean overflow) {
-		this.overflow = overflow;
+	public void setVariation(Integer variation) {
+		this.variation = variation;
 	}
-	
+
 	/**
-	 * スタミナの最大値を超えることを許容するかを設定。
-	 * 
-	 * @param overflow スタミナの最大値を超えることを許容するか
+	 * スタミナの増減量を設定
+	 *
+	 * @param variation スタミナの増減量
 	 * @return this
 	 */
-	public ChangeStaminaRequest withOverflow(Boolean overflow) {
-		setOverflow(overflow);
+	public ChangeStaminaRequest withVariation(Integer variation) {
+		setVariation(variation);
 		return this;
 	}
+
 }

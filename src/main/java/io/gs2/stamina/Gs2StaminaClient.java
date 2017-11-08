@@ -1,8 +1,25 @@
+/*
+ * Copyright 2016 Game Server Services, Inc. or its affiliates. All Rights
+ * Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
 package io.gs2.stamina;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.gs2.util.EncodingUtil;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -16,259 +33,326 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.gs2.AbstractGs2Client;
 import io.gs2.Gs2Constant;
-import io.gs2.auth.Gs2AuthClient;
 import io.gs2.model.IGs2Credential;
-import io.gs2.stamina.control.ChangeStaminaRequest;
-import io.gs2.stamina.control.ChangeStaminaResult;
-import io.gs2.stamina.control.ConsumeStaminaRequest;
-import io.gs2.stamina.control.ConsumeStaminaResult;
-import io.gs2.stamina.control.CreateStaminaPoolRequest;
-import io.gs2.stamina.control.CreateStaminaPoolResult;
-import io.gs2.stamina.control.DeleteStaminaPoolRequest;
-import io.gs2.stamina.control.DescribeServiceClassRequest;
-import io.gs2.stamina.control.DescribeServiceClassResult;
-import io.gs2.stamina.control.DescribeStaminaPoolRequest;
-import io.gs2.stamina.control.DescribeStaminaPoolResult;
-import io.gs2.stamina.control.GetStaminaPoolRequest;
-import io.gs2.stamina.control.GetStaminaPoolResult;
-import io.gs2.stamina.control.GetStaminaPoolStatusRequest;
-import io.gs2.stamina.control.GetStaminaPoolStatusResult;
-import io.gs2.stamina.control.GetStaminaRequest;
-import io.gs2.stamina.control.GetStaminaResult;
-import io.gs2.stamina.control.UpdateStaminaPoolRequest;
-import io.gs2.stamina.control.UpdateStaminaPoolResult;
+import io.gs2.stamina.control.*;
 
 /**
- * GS2-Stamina API クライアント
- * 
+ * GS2 Stamina API クライアント
+ *
  * @author Game Server Services, Inc.
  *
  */
 public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 
 	public static String ENDPOINT = "stamina";
-	
+
 	/**
 	 * コンストラクタ。
-	 * 
+	 *
 	 * @param credential 認証情報
 	 */
 	public Gs2StaminaClient(IGs2Credential credential) {
 		super(credential);
 	}
 
-	/**
-	 * サービスクラス一覧を取得。
-	 * 
-	 * @param request リクエストパラメータ
-	 * @return サービスクラス一覧
-	 */
-	public DescribeServiceClassResult describeServiceClass(DescribeServiceClassRequest request) {
-		HttpGet get = createHttpGet(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/serviceClass", 
-				credential, 
-				ENDPOINT,
-				DescribeServiceClassRequest.Constant.MODULE, 
-				DescribeServiceClassRequest.Constant.FUNCTION);
-		return doRequest(get, DescribeServiceClassResult.class);
-	}
 
 	/**
-	 * スタミナプールを作成。<br>
+	 * スタミナを増減します<br>
 	 * <br>
-	 * GS2-Staminaを利用するには、まずスタミナプールを作成する必要があります。<br>
-	 * スタミナプールには複数のユーザのスタミナ値を格納することができます。<br>
+	 * - 消費クオータ: 5<br>
 	 * <br>
-	 * スタミナプールの設定として、スタミナ値の回復速度を秒単位で指定できます。<br>
-	 * この設定値を利用して、スタミナ値の回復処理を行いつつユーザごとに最新のスタミナ値を取得することができます。<br>
-	 * 
+	 *
 	 * @param request リクエストパラメータ
-	 * @return 作成結果
+	 * @return 結果
 	 */
-	public CreateStaminaPoolResult createStaminaPool(CreateStaminaPoolRequest request) {
+
+	public ChangeStaminaResult changeStamina(ChangeStaminaRequest request) {
+
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("name", request.getName())
-				.put("description", request.getDescription())
-				.put("serviceClass", request.getServiceClass())
-				.put("increaseInterval", request.getIncreaseInterval());
+				.put("maxValue", request.getMaxValue())
+				.put("variation", request.getVariation());
+
+        if(request.getOverflow() != null) body.put("overflow", request.getOverflow());
 		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool", 
-				credential, 
+				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "/stamina",
+				credential,
 				ENDPOINT,
-				CreateStaminaPoolRequest.Constant.MODULE, 
+				ChangeStaminaRequest.Constant.MODULE,
+				ChangeStaminaRequest.Constant.FUNCTION,
+				body.toString());
+
+        post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
+
+		return doRequest(post, ChangeStaminaResult.class);
+
+	}
+
+
+	/**
+	 * スタミナを消費します。<br>
+	 * このエンドポイントは回復に使用できません。<br>
+	 * ポリシーで消費と回復を分けて管理したい場合に使用してください。<br>
+	 * <br>
+	 * - 消費クオータ: 5<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+	 * @return 結果
+	 */
+
+	public ConsumeStaminaResult consumeStamina(ConsumeStaminaRequest request) {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+				.put("maxValue", request.getMaxValue())
+				.put("variation", request.getVariation());
+
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "/stamina/consume",
+				credential,
+				ENDPOINT,
+				ConsumeStaminaRequest.Constant.MODULE,
+				ConsumeStaminaRequest.Constant.FUNCTION,
+				body.toString());
+
+        post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
+
+		return doRequest(post, ConsumeStaminaResult.class);
+
+	}
+
+
+	/**
+	 * スタミナプールを新規作成します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+	 * @return 結果
+	 */
+
+	public CreateStaminaPoolResult createStaminaPool(CreateStaminaPoolRequest request) {
+
+		ObjectNode body = JsonNodeFactory.instance.objectNode()
+				.put("increaseInterval", request.getIncreaseInterval())
+				.put("name", request.getName())
+				.put("serviceClass", request.getServiceClass());
+
+        if(request.getDescription() != null) body.put("description", request.getDescription());
+		HttpPost post = createHttpPost(
+				Gs2Constant.ENDPOINT_HOST + "/staminaPool",
+				credential,
+				ENDPOINT,
+				CreateStaminaPoolRequest.Constant.MODULE,
 				CreateStaminaPoolRequest.Constant.FUNCTION,
 				body.toString());
+
+
 		return doRequest(post, CreateStaminaPoolResult.class);
+
 	}
-	
+
+
 	/**
-	 * スタミナプール一覧を取得。
-	 * 
+	 * スタミナプールを削除します<br>
+	 * <br>
+	 *
 	 * @param request リクエストパラメータ
-	 * @return スタミナプール一覧
 	 */
+
+	public void deleteStaminaPool(DeleteStaminaPoolRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "";
+
+
+
+		HttpDelete delete = createHttpDelete(
+				url,
+				credential,
+				ENDPOINT,
+				DeleteStaminaPoolRequest.Constant.MODULE,
+				DeleteStaminaPoolRequest.Constant.FUNCTION);
+
+
+		doRequest(delete, null);
+
+	}
+
+
+	/**
+	 * サービスクラスの一覧を取得します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+	 * @return 結果
+	 */
+
+	public DescribeServiceClassResult describeServiceClass(DescribeServiceClassRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/serviceClass";
+
+
+
+		HttpGet get = createHttpGet(
+				url,
+				credential,
+				ENDPOINT,
+				DescribeServiceClassRequest.Constant.MODULE,
+				DescribeServiceClassRequest.Constant.FUNCTION);
+
+
+		return doRequest(get, DescribeServiceClassResult.class);
+
+	}
+
+
+	/**
+	 * スタミナプールの一覧を取得します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+	 * @return 結果
+	 */
+
 	public DescribeStaminaPoolResult describeStaminaPool(DescribeStaminaPoolRequest request) {
-		String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool";
-		List<NameValuePair> queryString = new ArrayList<>();
-		if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
-		if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", request.getPageToken()));
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool";
+
+        List<NameValuePair> queryString = new ArrayList<>();
+        if(request.getPageToken() != null) queryString.add(new BasicNameValuePair("pageToken", String.valueOf(request.getPageToken())));
+        if(request.getLimit() != null) queryString.add(new BasicNameValuePair("limit", String.valueOf(request.getLimit())));
+
+
 		if(queryString.size() > 0) {
 			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
 		}
 		HttpGet get = createHttpGet(
-				url, 
-				credential, 
+				url,
+				credential,
 				ENDPOINT,
-				DescribeStaminaPoolRequest.Constant.MODULE, 
+				DescribeStaminaPoolRequest.Constant.MODULE,
 				DescribeStaminaPoolRequest.Constant.FUNCTION);
+
+
 		return doRequest(get, DescribeStaminaPoolResult.class);
+
 	}
 
+
 	/**
-	 * スタミナプールを取得。
-	 * 
+	 * 現在のスタミナ値を取得します<br>
+	 * <br>
+	 * - 消費クオータ: 3<br>
+	 * <br>
+	 *
 	 * @param request リクエストパラメータ
-	 * @return スタミナプール
+	 * @return 結果
 	 */
+
+	public GetStaminaResult getStamina(GetStaminaRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "/stamina";
+
+        List<NameValuePair> queryString = new ArrayList<>();
+        if(request.getMaxValue() != null) queryString.add(new BasicNameValuePair("maxValue", String.valueOf(request.getMaxValue())));
+
+
+		if(queryString.size() > 0) {
+			url += "?" + URLEncodedUtils.format(queryString, "UTF-8");
+		}
+		HttpGet get = createHttpGet(
+				url,
+				credential,
+				ENDPOINT,
+				GetStaminaRequest.Constant.MODULE,
+				GetStaminaRequest.Constant.FUNCTION);
+
+        get.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
+
+		return doRequest(get, GetStaminaResult.class);
+
+	}
+
+
+	/**
+	 * スタミナプールを取得します<br>
+	 * <br>
+	 *
+	 * @param request リクエストパラメータ
+	 * @return 結果
+	 */
+
 	public GetStaminaPoolResult getStaminaPool(GetStaminaPoolRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "";
+
+
+
 		HttpGet get = createHttpGet(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + request.getStaminaPoolName(), 
-				credential, 
+				url,
+				credential,
 				ENDPOINT,
-				GetStaminaPoolRequest.Constant.MODULE, 
+				GetStaminaPoolRequest.Constant.MODULE,
 				GetStaminaPoolRequest.Constant.FUNCTION);
+
+
 		return doRequest(get, GetStaminaPoolResult.class);
+
 	}
 
+
 	/**
-	 * スタミナプールの状態を取得。
-	 * 
+	 * スタミナプールの状態を取得します<br>
+	 * <br>
+	 *
 	 * @param request リクエストパラメータ
-	 * @return スタミナプールの状態
+	 * @return 結果
 	 */
+
 	public GetStaminaPoolStatusResult getStaminaPoolStatus(GetStaminaPoolStatusRequest request) {
+
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "/status";
+
+
+
 		HttpGet get = createHttpGet(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + request.getStaminaPoolName() + "/status", 
-				credential, 
+				url,
+				credential,
 				ENDPOINT,
-				GetStaminaPoolStatusRequest.Constant.MODULE, 
+				GetStaminaPoolStatusRequest.Constant.MODULE,
 				GetStaminaPoolStatusRequest.Constant.FUNCTION);
+
+
 		return doRequest(get, GetStaminaPoolStatusResult.class);
+
 	}
 
+
 	/**
-	 * スタミナプールを更新。
-	 * 
+	 * スタミナプールを更新します<br>
+	 * <br>
+	 *
 	 * @param request リクエストパラメータ
-	 * @return 更新結果
+	 * @return 結果
 	 */
+
 	public UpdateStaminaPoolResult updateStaminaPool(UpdateStaminaPoolRequest request) {
+
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("description", request.getDescription())
 				.put("serviceClass", request.getServiceClass())
 				.put("increaseInterval", request.getIncreaseInterval());
+
+        if(request.getDescription() != null) body.put("description", request.getDescription());
 		HttpPut put = createHttpPut(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + request.getStaminaPoolName(), 
-				credential, 
+				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "",
+				credential,
 				ENDPOINT,
-				UpdateStaminaPoolRequest.Constant.MODULE, 
+				UpdateStaminaPoolRequest.Constant.MODULE,
 				UpdateStaminaPoolRequest.Constant.FUNCTION,
 				body.toString());
+
+
 		return doRequest(put, UpdateStaminaPoolResult.class);
+
 	}
 
-	/**
-	 * スタミナプールを削除。
-	 * 
-	 * @param request リクエストパラメータ
-	 */
-	public void deleteStaminaPool(DeleteStaminaPoolRequest request) {
-		HttpDelete delete = createHttpDelete(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + request.getStaminaPoolName(), 
-				credential, 
-				ENDPOINT,
-				DeleteStaminaPoolRequest.Constant.MODULE, 
-				DeleteStaminaPoolRequest.Constant.FUNCTION);
-		doRequest(delete, null);
-	}
 
-	/**
-	 * スタミナ値を取得。<br>
-	 * <br>
-	 * 指定したユーザの最新のスタミナ値を取得します。<br>
-	 * 回復処理などが行われた状態の値が応答されますので、そのままゲームで利用いただけます。<br>
-	 * <br>
-	 * accessToken には {@link Gs2AuthClient#login(io.gs2.auth.control.LoginRequest)} でログインして取得したアクセストークンを指定してください。<br>
-	 * 
-	 * @param request リクエストパラメータ
-	 * @return スタミナ値
-	 */
-	public GetStaminaResult getStamina(GetStaminaRequest request) {
-		HttpGet get = createHttpGet(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + request.getStaminaPoolName() + "/stamina?maxValue=" + request.getMaxValue(), 
-				credential, 
-				ENDPOINT,
-				GetStaminaRequest.Constant.MODULE, 
-				GetStaminaRequest.Constant.FUNCTION);
-		get.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
-		return doRequest(get, GetStaminaResult.class);
-	}
-
-	/**
-	 * スタミナ値を増減させる。<br>
-	 * <br>
-	 * 同一ユーザに対するスタミナ値の増減処理が衝突した場合は、後でリクエストを出した側の処理が失敗します。<br>
-	 * そのため、同時に複数のデバイスを利用してゲームを遊んでいる際に、一斉にクエストを開始することで1回分のスタミナ消費で2回ゲームが遊べてしまう。<br>
-	 * というような不正行為を防ぐことが出来るようになっています。<br>
-	 * <br>
-	 * クエストに失敗した時に消費したスタミナ値を戻してあげる際や、スタミナ値の回復アイテムを利用した際などに<br>
-	 * スタミナ値を増やす操作を行うことになりますが、その際に overflow に true を指定することで、スタミナ値の最大値を超える回復を行えます。<br>
-	 * スタミナ値の上限を超えた部分は overflow フィールドに格納され、優先してそちらが消費されます。<br>
-	 * <br>
-	 * accessToken には {@link Gs2AuthClient#login(io.gs2.auth.control.LoginRequest)} でログインして取得したアクセストークンを指定してください。<br>
-	 * 
-	 * @param request リクエストパラメータ
-	 * @return 増減結果
-	 */
-	public ChangeStaminaResult changeStamina(ChangeStaminaRequest request) {
-		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("variation", request.getVariation())
-				.put("maxValue", request.getMaxValue())
-				.put("overflow", request.getOverflow());
-		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + request.getStaminaPoolName() + "/stamina", 
-				credential, 
-				ENDPOINT,
-				ChangeStaminaRequest.Constant.MODULE, 
-				ChangeStaminaRequest.Constant.FUNCTION,
-				body.toString());
-		post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
-		return doRequest(post, ChangeStaminaResult.class);
-	}
-
-	/**
-	 * スタミナ値を消費させる。<br>
-	 * <br>
-	 * changeStamina() の回復ができないAPIです。<br>
-	 * GS2-Identifier のセキュリティポリシー機能を使って、消費と回復を明確にコントロールしたい場合に使用してください。<br>
-	 * <br>
-	 * accessToken には {@link Gs2AuthClient#login(io.gs2.auth.control.LoginRequest)} でログインして取得したアクセストークンを指定してください。<br>
-	 * 
-	 * @param request リクエストパラメータ
-	 * @return 増減結果
-	 */
-	public ConsumeStaminaResult consumeStamina(ConsumeStaminaRequest request) {
-		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("variation", request.getVariation())
-				.put("maxValue", request.getMaxValue());
-		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + request.getStaminaPoolName() + "/stamina/consume", 
-				credential, 
-				ENDPOINT,
-				ConsumeStaminaRequest.Constant.MODULE, 
-				ConsumeStaminaRequest.Constant.FUNCTION,
-				body.toString());
-		post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
-		return doRequest(post, ConsumeStaminaResult.class);
-	}
 }
