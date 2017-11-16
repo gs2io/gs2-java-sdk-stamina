@@ -31,45 +31,60 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 		public static final String FUNCTION = "CreateStaminaPool";
 	}
 
-	/** スタミナの回復速度(秒) */
-	private Integer increaseInterval;
+	/** スタミナの最大値取得 に実行されるGS2-Script */
+	private String getMaxStaminaTriggerScript;
 
 	/** スタミナプールの名前 */
 	private String name;
 
+	/** スタミナ消費完了時 に実行されるGS2-Script */
+	private String consumeStaminaDoneTriggerScript;
+
+	/** スタミナ回復時 に実行されるGS2-Script */
+	private String addStaminaTriggerScript;
+
 	/** スタミナプールのサービスクラス */
 	private String serviceClass;
+
+	/** スタミナ回復完了時 に実行されるGS2-Script */
+	private String addStaminaDoneTriggerScript;
+
+	/** スタミナ消費時 に実行されるGS2-Script */
+	private String consumeStaminaTriggerScript;
+
+	/** スタミナの回復速度(秒) */
+	private Integer increaseInterval;
 
 	/** スタミナプールの説明 */
 	private String description;
 
 
 	/**
-	 * スタミナの回復速度(秒)を取得
+	 * スタミナの最大値取得 に実行されるGS2-Scriptを取得
 	 *
-	 * @return スタミナの回復速度(秒)
+	 * @return スタミナの最大値取得 に実行されるGS2-Script
 	 */
-	public Integer getIncreaseInterval() {
-		return increaseInterval;
+	public String getGetMaxStaminaTriggerScript() {
+		return getMaxStaminaTriggerScript;
 	}
 
 	/**
-	 * スタミナの回復速度(秒)を設定
+	 * スタミナの最大値取得 に実行されるGS2-Scriptを設定
 	 *
-	 * @param increaseInterval スタミナの回復速度(秒)
+	 * @param getMaxStaminaTriggerScript スタミナの最大値取得 に実行されるGS2-Script
 	 */
-	public void setIncreaseInterval(Integer increaseInterval) {
-		this.increaseInterval = increaseInterval;
+	public void setGetMaxStaminaTriggerScript(String getMaxStaminaTriggerScript) {
+		this.getMaxStaminaTriggerScript = getMaxStaminaTriggerScript;
 	}
 
 	/**
-	 * スタミナの回復速度(秒)を設定
+	 * スタミナの最大値取得 に実行されるGS2-Scriptを設定
 	 *
-	 * @param increaseInterval スタミナの回復速度(秒)
+	 * @param getMaxStaminaTriggerScript スタミナの最大値取得 に実行されるGS2-Script
 	 * @return this
 	 */
-	public CreateStaminaPoolRequest withIncreaseInterval(Integer increaseInterval) {
-		setIncreaseInterval(increaseInterval);
+	public CreateStaminaPoolRequest withGetMaxStaminaTriggerScript(String getMaxStaminaTriggerScript) {
+		setGetMaxStaminaTriggerScript(getMaxStaminaTriggerScript);
 		return this;
 	}
 
@@ -103,6 +118,64 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 	}
 
 	/**
+	 * スタミナ消費完了時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナ消費完了時 に実行されるGS2-Script
+	 */
+	public String getConsumeStaminaDoneTriggerScript() {
+		return consumeStaminaDoneTriggerScript;
+	}
+
+	/**
+	 * スタミナ消費完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param consumeStaminaDoneTriggerScript スタミナ消費完了時 に実行されるGS2-Script
+	 */
+	public void setConsumeStaminaDoneTriggerScript(String consumeStaminaDoneTriggerScript) {
+		this.consumeStaminaDoneTriggerScript = consumeStaminaDoneTriggerScript;
+	}
+
+	/**
+	 * スタミナ消費完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param consumeStaminaDoneTriggerScript スタミナ消費完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withConsumeStaminaDoneTriggerScript(String consumeStaminaDoneTriggerScript) {
+		setConsumeStaminaDoneTriggerScript(consumeStaminaDoneTriggerScript);
+		return this;
+	}
+
+	/**
+	 * スタミナ回復時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナ回復時 に実行されるGS2-Script
+	 */
+	public String getAddStaminaTriggerScript() {
+		return addStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ回復時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param addStaminaTriggerScript スタミナ回復時 に実行されるGS2-Script
+	 */
+	public void setAddStaminaTriggerScript(String addStaminaTriggerScript) {
+		this.addStaminaTriggerScript = addStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ回復時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param addStaminaTriggerScript スタミナ回復時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withAddStaminaTriggerScript(String addStaminaTriggerScript) {
+		setAddStaminaTriggerScript(addStaminaTriggerScript);
+		return this;
+	}
+
+	/**
 	 * スタミナプールのサービスクラスを取得
 	 *
 	 * @return スタミナプールのサービスクラス
@@ -128,6 +201,93 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 	 */
 	public CreateStaminaPoolRequest withServiceClass(String serviceClass) {
 		setServiceClass(serviceClass);
+		return this;
+	}
+
+	/**
+	 * スタミナ回復完了時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナ回復完了時 に実行されるGS2-Script
+	 */
+	public String getAddStaminaDoneTriggerScript() {
+		return addStaminaDoneTriggerScript;
+	}
+
+	/**
+	 * スタミナ回復完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param addStaminaDoneTriggerScript スタミナ回復完了時 に実行されるGS2-Script
+	 */
+	public void setAddStaminaDoneTriggerScript(String addStaminaDoneTriggerScript) {
+		this.addStaminaDoneTriggerScript = addStaminaDoneTriggerScript;
+	}
+
+	/**
+	 * スタミナ回復完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param addStaminaDoneTriggerScript スタミナ回復完了時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withAddStaminaDoneTriggerScript(String addStaminaDoneTriggerScript) {
+		setAddStaminaDoneTriggerScript(addStaminaDoneTriggerScript);
+		return this;
+	}
+
+	/**
+	 * スタミナ消費時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナ消費時 に実行されるGS2-Script
+	 */
+	public String getConsumeStaminaTriggerScript() {
+		return consumeStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ消費時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param consumeStaminaTriggerScript スタミナ消費時 に実行されるGS2-Script
+	 */
+	public void setConsumeStaminaTriggerScript(String consumeStaminaTriggerScript) {
+		this.consumeStaminaTriggerScript = consumeStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ消費時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param consumeStaminaTriggerScript スタミナ消費時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withConsumeStaminaTriggerScript(String consumeStaminaTriggerScript) {
+		setConsumeStaminaTriggerScript(consumeStaminaTriggerScript);
+		return this;
+	}
+
+	/**
+	 * スタミナの回復速度(秒)を取得
+	 *
+	 * @return スタミナの回復速度(秒)
+	 */
+	public Integer getIncreaseInterval() {
+		return increaseInterval;
+	}
+
+	/**
+	 * スタミナの回復速度(秒)を設定
+	 *
+	 * @param increaseInterval スタミナの回復速度(秒)
+	 */
+	public void setIncreaseInterval(Integer increaseInterval) {
+		this.increaseInterval = increaseInterval;
+	}
+
+	/**
+	 * スタミナの回復速度(秒)を設定
+	 *
+	 * @param increaseInterval スタミナの回復速度(秒)
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withIncreaseInterval(Integer increaseInterval) {
+		setIncreaseInterval(increaseInterval);
 		return this;
 	}
 

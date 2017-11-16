@@ -63,7 +63,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public ChangeStaminaResult changeStamina(ChangeStaminaRequest request) {
@@ -97,7 +99,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public ConsumeStaminaResult consumeStamina(ConsumeStaminaRequest request) {
@@ -126,16 +130,23 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public CreateStaminaPoolResult createStaminaPool(CreateStaminaPoolRequest request) {
 
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("increaseInterval", request.getIncreaseInterval())
 				.put("name", request.getName())
-				.put("serviceClass", request.getServiceClass());
+				.put("serviceClass", request.getServiceClass())
+				.put("increaseInterval", request.getIncreaseInterval());
 
+        if(request.getGetMaxStaminaTriggerScript() != null) body.put("getMaxStaminaTriggerScript", request.getGetMaxStaminaTriggerScript());
+        if(request.getConsumeStaminaDoneTriggerScript() != null) body.put("consumeStaminaDoneTriggerScript", request.getConsumeStaminaDoneTriggerScript());
+        if(request.getAddStaminaTriggerScript() != null) body.put("addStaminaTriggerScript", request.getAddStaminaTriggerScript());
+        if(request.getAddStaminaDoneTriggerScript() != null) body.put("addStaminaDoneTriggerScript", request.getAddStaminaDoneTriggerScript());
+        if(request.getConsumeStaminaTriggerScript() != null) body.put("consumeStaminaTriggerScript", request.getConsumeStaminaTriggerScript());
         if(request.getDescription() != null) body.put("description", request.getDescription());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/staminaPool",
@@ -156,6 +167,7 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 */
 
 	public void deleteStaminaPool(DeleteStaminaPoolRequest request) {
@@ -182,7 +194,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeServiceClassResult describeServiceClass(DescribeServiceClassRequest request) {
@@ -209,7 +223,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public DescribeStaminaPoolResult describeStaminaPool(DescribeStaminaPoolRequest request) {
@@ -244,7 +260,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public GetStaminaResult getStamina(GetStaminaRequest request) {
@@ -277,7 +295,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public GetStaminaPoolResult getStaminaPool(GetStaminaPoolRequest request) {
@@ -304,7 +324,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public GetStaminaPoolStatusResult getStaminaPoolStatus(GetStaminaPoolStatusRequest request) {
@@ -331,7 +353,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	 * <br>
 	 *
 	 * @param request リクエストパラメータ
+
 	 * @return 結果
+
 	 */
 
 	public UpdateStaminaPoolResult updateStaminaPool(UpdateStaminaPoolRequest request) {
@@ -340,7 +364,12 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				.put("serviceClass", request.getServiceClass())
 				.put("increaseInterval", request.getIncreaseInterval());
 
+        if(request.getGetMaxStaminaTriggerScript() != null) body.put("getMaxStaminaTriggerScript", request.getGetMaxStaminaTriggerScript());
         if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getConsumeStaminaDoneTriggerScript() != null) body.put("consumeStaminaDoneTriggerScript", request.getConsumeStaminaDoneTriggerScript());
+        if(request.getAddStaminaTriggerScript() != null) body.put("addStaminaTriggerScript", request.getAddStaminaTriggerScript());
+        if(request.getAddStaminaDoneTriggerScript() != null) body.put("addStaminaDoneTriggerScript", request.getAddStaminaDoneTriggerScript());
+        if(request.getConsumeStaminaTriggerScript() != null) body.put("consumeStaminaTriggerScript", request.getConsumeStaminaTriggerScript());
 		HttpPut put = createHttpPut(
 				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "",
 				credential,
