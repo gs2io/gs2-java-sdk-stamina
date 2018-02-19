@@ -71,17 +71,20 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	public ChangeStaminaResult changeStamina(ChangeStaminaRequest request) {
 
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("maxValue", request.getMaxValue())
-				.put("variation", request.getVariation());
+				.put("variation", request.getVariation())
+				.put("maxValue", request.getMaxValue());
 
         if(request.getOverflow() != null) body.put("overflow", request.getOverflow());
 		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "/stamina",
+				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null || request.getStaminaPoolName().equals("") ? "null" : request.getStaminaPoolName()) + "/stamina",
 				credential,
 				ENDPOINT,
 				ChangeStaminaRequest.Constant.MODULE,
 				ChangeStaminaRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
         post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
@@ -107,16 +110,19 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 	public ConsumeStaminaResult consumeStamina(ConsumeStaminaRequest request) {
 
 		ObjectNode body = JsonNodeFactory.instance.objectNode()
-				.put("maxValue", request.getMaxValue())
-				.put("variation", request.getVariation());
+				.put("variation", request.getVariation())
+				.put("maxValue", request.getMaxValue());
 
 		HttpPost post = createHttpPost(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "/stamina/consume",
+				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null || request.getStaminaPoolName().equals("") ? "null" : request.getStaminaPoolName()) + "/stamina/consume",
 				credential,
 				ENDPOINT,
 				ConsumeStaminaRequest.Constant.MODULE,
 				ConsumeStaminaRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
         post.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
@@ -142,12 +148,12 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				.put("serviceClass", request.getServiceClass())
 				.put("increaseInterval", request.getIncreaseInterval());
 
-        if(request.getGetMaxStaminaTriggerScript() != null) body.put("getMaxStaminaTriggerScript", request.getGetMaxStaminaTriggerScript());
+        if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getConsumeStaminaTriggerScript() != null) body.put("consumeStaminaTriggerScript", request.getConsumeStaminaTriggerScript());
         if(request.getConsumeStaminaDoneTriggerScript() != null) body.put("consumeStaminaDoneTriggerScript", request.getConsumeStaminaDoneTriggerScript());
         if(request.getAddStaminaTriggerScript() != null) body.put("addStaminaTriggerScript", request.getAddStaminaTriggerScript());
         if(request.getAddStaminaDoneTriggerScript() != null) body.put("addStaminaDoneTriggerScript", request.getAddStaminaDoneTriggerScript());
-        if(request.getConsumeStaminaTriggerScript() != null) body.put("consumeStaminaTriggerScript", request.getConsumeStaminaTriggerScript());
-        if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getGetMaxStaminaTriggerScript() != null) body.put("getMaxStaminaTriggerScript", request.getGetMaxStaminaTriggerScript());
 		HttpPost post = createHttpPost(
 				Gs2Constant.ENDPOINT_HOST + "/staminaPool",
 				credential,
@@ -155,6 +161,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				CreateStaminaPoolRequest.Constant.MODULE,
 				CreateStaminaPoolRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            post.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(post, CreateStaminaPoolResult.class);
@@ -172,7 +181,7 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 
 	public void deleteStaminaPool(DeleteStaminaPoolRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null || request.getStaminaPoolName().equals("") ? "null" : request.getStaminaPoolName()) + "";
 
 
 
@@ -182,6 +191,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				ENDPOINT,
 				DeleteStaminaPoolRequest.Constant.MODULE,
 				DeleteStaminaPoolRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            delete.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		doRequest(delete, null);
@@ -211,6 +223,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				ENDPOINT,
 				DescribeServiceClassRequest.Constant.MODULE,
 				DescribeServiceClassRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, DescribeServiceClassResult.class);
@@ -246,6 +261,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				ENDPOINT,
 				DescribeStaminaPoolRequest.Constant.MODULE,
 				DescribeStaminaPoolRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, DescribeStaminaPoolResult.class);
@@ -267,7 +285,7 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 
 	public GetStaminaResult getStamina(GetStaminaRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "/stamina";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null || request.getStaminaPoolName().equals("") ? "null" : request.getStaminaPoolName()) + "/stamina";
 
         List<NameValuePair> queryString = new ArrayList<>();
         if(request.getMaxValue() != null) queryString.add(new BasicNameValuePair("maxValue", String.valueOf(request.getMaxValue())));
@@ -282,6 +300,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				ENDPOINT,
 				GetStaminaRequest.Constant.MODULE,
 				GetStaminaRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
         get.setHeader("X-GS2-ACCESS-TOKEN", request.getAccessToken());
 
@@ -302,7 +323,7 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 
 	public GetStaminaPoolResult getStaminaPool(GetStaminaPoolRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null || request.getStaminaPoolName().equals("") ? "null" : request.getStaminaPoolName()) + "";
 
 
 
@@ -312,6 +333,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				ENDPOINT,
 				GetStaminaPoolRequest.Constant.MODULE,
 				GetStaminaPoolRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, GetStaminaPoolResult.class);
@@ -331,7 +355,7 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 
 	public GetStaminaPoolStatusResult getStaminaPoolStatus(GetStaminaPoolStatusRequest request) {
 
-	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "/status";
+	    String url = Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null || request.getStaminaPoolName().equals("") ? "null" : request.getStaminaPoolName()) + "/status";
 
 
 
@@ -341,6 +365,9 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				ENDPOINT,
 				GetStaminaPoolStatusRequest.Constant.MODULE,
 				GetStaminaPoolStatusRequest.Constant.FUNCTION);
+        if(request.getRequestId() != null) {
+            get.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(get, GetStaminaPoolStatusResult.class);
@@ -364,19 +391,22 @@ public class Gs2StaminaClient extends AbstractGs2Client<Gs2StaminaClient> {
 				.put("serviceClass", request.getServiceClass())
 				.put("increaseInterval", request.getIncreaseInterval());
 
-        if(request.getGetMaxStaminaTriggerScript() != null) body.put("getMaxStaminaTriggerScript", request.getGetMaxStaminaTriggerScript());
         if(request.getDescription() != null) body.put("description", request.getDescription());
+        if(request.getConsumeStaminaTriggerScript() != null) body.put("consumeStaminaTriggerScript", request.getConsumeStaminaTriggerScript());
         if(request.getConsumeStaminaDoneTriggerScript() != null) body.put("consumeStaminaDoneTriggerScript", request.getConsumeStaminaDoneTriggerScript());
         if(request.getAddStaminaTriggerScript() != null) body.put("addStaminaTriggerScript", request.getAddStaminaTriggerScript());
         if(request.getAddStaminaDoneTriggerScript() != null) body.put("addStaminaDoneTriggerScript", request.getAddStaminaDoneTriggerScript());
-        if(request.getConsumeStaminaTriggerScript() != null) body.put("consumeStaminaTriggerScript", request.getConsumeStaminaTriggerScript());
+        if(request.getGetMaxStaminaTriggerScript() != null) body.put("getMaxStaminaTriggerScript", request.getGetMaxStaminaTriggerScript());
 		HttpPut put = createHttpPut(
-				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null ? "null" : request.getStaminaPoolName()) + "",
+				Gs2Constant.ENDPOINT_HOST + "/staminaPool/" + (request.getStaminaPoolName() == null || request.getStaminaPoolName().equals("") ? "null" : request.getStaminaPoolName()) + "",
 				credential,
 				ENDPOINT,
 				UpdateStaminaPoolRequest.Constant.MODULE,
 				UpdateStaminaPoolRequest.Constant.FUNCTION,
 				body.toString());
+        if(request.getRequestId() != null) {
+            put.setHeader("X-GS2-REQUEST-ID", request.getRequestId());
+        }
 
 
 		return doRequest(put, UpdateStaminaPoolResult.class);
