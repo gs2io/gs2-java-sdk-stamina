@@ -25,77 +25,77 @@ import io.gs2.control.Gs2UserRequest;
  * @author Game Server Services, Inc.
  */
 @SuppressWarnings("serial")
-public class ConsumeStaminaRequest extends Gs2UserRequest<ConsumeStaminaRequest> {
+public class ChangeStaminaByStampSheetRequest extends Gs2UserRequest<ChangeStaminaByStampSheetRequest> {
 
 	public static class Constant extends Gs2Stamina.Constant {
-		public static final String FUNCTION = "ConsumeStamina";
+		public static final String FUNCTION = "ChangeStaminaByStampSheet";
 	}
 
-	/** スタミナプールの名前を指定します。 */
-	private String staminaPoolName;
+	/** スタンプシート */
+	private String sheet;
 
-	/** スタミナの増減量 */
-	private Integer variation;
+	/** スタンプの暗号鍵 */
+	private String keyName;
 
 	/** スタミナの最大値 */
 	private Integer maxValue;
 
 
 	/**
-	 * スタミナプールの名前を指定します。を取得
+	 * スタンプシートを取得
 	 *
-	 * @return スタミナプールの名前を指定します。
+	 * @return スタンプシート
 	 */
-	public String getStaminaPoolName() {
-		return staminaPoolName;
+	public String getSheet() {
+		return sheet;
 	}
 
 	/**
-	 * スタミナプールの名前を指定します。を設定
+	 * スタンプシートを設定
 	 *
-	 * @param staminaPoolName スタミナプールの名前を指定します。
+	 * @param sheet スタンプシート
 	 */
-	public void setStaminaPoolName(String staminaPoolName) {
-		this.staminaPoolName = staminaPoolName;
+	public void setSheet(String sheet) {
+		this.sheet = sheet;
 	}
 
 	/**
-	 * スタミナプールの名前を指定します。を設定
+	 * スタンプシートを設定
 	 *
-	 * @param staminaPoolName スタミナプールの名前を指定します。
+	 * @param sheet スタンプシート
 	 * @return this
 	 */
-	public ConsumeStaminaRequest withStaminaPoolName(String staminaPoolName) {
-		setStaminaPoolName(staminaPoolName);
+	public ChangeStaminaByStampSheetRequest withSheet(String sheet) {
+		setSheet(sheet);
 		return this;
 	}
 
 	/**
-	 * スタミナの増減量を取得
+	 * スタンプの暗号鍵を取得
 	 *
-	 * @return スタミナの増減量
+	 * @return スタンプの暗号鍵
 	 */
-	public Integer getVariation() {
-		return variation;
+	public String getKeyName() {
+		return keyName;
 	}
 
 	/**
-	 * スタミナの増減量を設定
+	 * スタンプの暗号鍵を設定
 	 *
-	 * @param variation スタミナの増減量
+	 * @param keyName スタンプの暗号鍵
 	 */
-	public void setVariation(Integer variation) {
-		this.variation = variation;
+	public void setKeyName(String keyName) {
+		this.keyName = keyName;
 	}
 
 	/**
-	 * スタミナの増減量を設定
+	 * スタンプの暗号鍵を設定
 	 *
-	 * @param variation スタミナの増減量
+	 * @param keyName スタンプの暗号鍵
 	 * @return this
 	 */
-	public ConsumeStaminaRequest withVariation(Integer variation) {
-		setVariation(variation);
+	public ChangeStaminaByStampSheetRequest withKeyName(String keyName) {
+		setKeyName(keyName);
 		return this;
 	}
 
@@ -123,7 +123,7 @@ public class ConsumeStaminaRequest extends Gs2UserRequest<ConsumeStaminaRequest>
 	 * @param maxValue スタミナの最大値
 	 * @return this
 	 */
-	public ConsumeStaminaRequest withMaxValue(Integer maxValue) {
+	public ChangeStaminaByStampSheetRequest withMaxValue(Integer maxValue) {
 		setMaxValue(maxValue);
 		return this;
 	}

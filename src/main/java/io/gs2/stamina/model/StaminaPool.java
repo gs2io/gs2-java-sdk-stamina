@@ -30,81 +30,45 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class StaminaPool implements Serializable {
 
-	/** スタミナの最大値取得 に実行されるGS2-Script */
-	private String getMaxStaminaTriggerScript;
-
-	/** 説明文 */
-	private String description;
-
 	/** スタミナプールGRN */
 	private String staminaPoolId;
-
-	/** スタミナ消費時 に実行されるGS2-Script */
-	private String consumeStaminaTriggerScript;
-
-	/** スタミナ回復時 に実行されるGS2-Script */
-	private String addStaminaTriggerScript;
-
-	/** サービスクラス */
-	private String serviceClass;
-
-	/** 作成日時(エポック秒) */
-	private Integer createAt;
-
-	/** スタミナ回復完了時 に実行されるGS2-Script */
-	private String addStaminaDoneTriggerScript;
-
-	/** スタミナ消費完了時 に実行されるGS2-Script */
-	private String consumeStaminaDoneTriggerScript;
 
 	/** オーナーID */
 	private String ownerId;
 
+	/** スタミナプール名 */
+	private String name;
+
+	/** 説明文 */
+	private String description;
+
+	/** サービスクラス */
+	private String serviceClass;
+
 	/** スタミナの回復速度(秒) */
 	private Integer increaseInterval;
+
+	/** スタミナ消費時 に実行されるGS2-Script */
+	private String consumeStaminaTriggerScript;
+
+	/** スタミナ消費完了時 に実行されるGS2-Script */
+	private String consumeStaminaDoneTriggerScript;
+
+	/** スタミナ回復時 に実行されるGS2-Script */
+	private String addStaminaTriggerScript;
+
+	/** スタミナ回復完了時 に実行されるGS2-Script */
+	private String addStaminaDoneTriggerScript;
+
+	/** スタミナの最大値取得 に実行されるGS2-Script */
+	private String getMaxStaminaTriggerScript;
+
+	/** 作成日時(エポック秒) */
+	private Integer createAt;
 
 	/** 最終更新日時(エポック秒) */
 	private Integer updateAt;
 
-	/** スタミナプール名 */
-	private String name;
-
-
-	/**
-	 * スタミナの最大値取得 に実行されるGS2-Scriptを取得
-	 *
-	 * @return スタミナの最大値取得 に実行されるGS2-Script
-	 */
-	public String getGetMaxStaminaTriggerScript() {
-		return getMaxStaminaTriggerScript;
-	}
-
-	/**
-	 * スタミナの最大値取得 に実行されるGS2-Scriptを設定
-	 *
-	 * @param getMaxStaminaTriggerScript スタミナの最大値取得 に実行されるGS2-Script
-	 */
-	public void setGetMaxStaminaTriggerScript(String getMaxStaminaTriggerScript) {
-		this.getMaxStaminaTriggerScript = getMaxStaminaTriggerScript;
-	}
-
-	/**
-	 * 説明文を取得
-	 *
-	 * @return 説明文
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * 説明文を設定
-	 *
-	 * @param description 説明文
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	/**
 	 * スタミナプールGRNを取得
@@ -122,114 +86,6 @@ public class StaminaPool implements Serializable {
 	 */
 	public void setStaminaPoolId(String staminaPoolId) {
 		this.staminaPoolId = staminaPoolId;
-	}
-
-	/**
-	 * スタミナ消費時 に実行されるGS2-Scriptを取得
-	 *
-	 * @return スタミナ消費時 に実行されるGS2-Script
-	 */
-	public String getConsumeStaminaTriggerScript() {
-		return consumeStaminaTriggerScript;
-	}
-
-	/**
-	 * スタミナ消費時 に実行されるGS2-Scriptを設定
-	 *
-	 * @param consumeStaminaTriggerScript スタミナ消費時 に実行されるGS2-Script
-	 */
-	public void setConsumeStaminaTriggerScript(String consumeStaminaTriggerScript) {
-		this.consumeStaminaTriggerScript = consumeStaminaTriggerScript;
-	}
-
-	/**
-	 * スタミナ回復時 に実行されるGS2-Scriptを取得
-	 *
-	 * @return スタミナ回復時 に実行されるGS2-Script
-	 */
-	public String getAddStaminaTriggerScript() {
-		return addStaminaTriggerScript;
-	}
-
-	/**
-	 * スタミナ回復時 に実行されるGS2-Scriptを設定
-	 *
-	 * @param addStaminaTriggerScript スタミナ回復時 に実行されるGS2-Script
-	 */
-	public void setAddStaminaTriggerScript(String addStaminaTriggerScript) {
-		this.addStaminaTriggerScript = addStaminaTriggerScript;
-	}
-
-	/**
-	 * サービスクラスを取得
-	 *
-	 * @return サービスクラス
-	 */
-	public String getServiceClass() {
-		return serviceClass;
-	}
-
-	/**
-	 * サービスクラスを設定
-	 *
-	 * @param serviceClass サービスクラス
-	 */
-	public void setServiceClass(String serviceClass) {
-		this.serviceClass = serviceClass;
-	}
-
-	/**
-	 * 作成日時(エポック秒)を取得
-	 *
-	 * @return 作成日時(エポック秒)
-	 */
-	public Integer getCreateAt() {
-		return createAt;
-	}
-
-	/**
-	 * 作成日時(エポック秒)を設定
-	 *
-	 * @param createAt 作成日時(エポック秒)
-	 */
-	public void setCreateAt(Integer createAt) {
-		this.createAt = createAt;
-	}
-
-	/**
-	 * スタミナ回復完了時 に実行されるGS2-Scriptを取得
-	 *
-	 * @return スタミナ回復完了時 に実行されるGS2-Script
-	 */
-	public String getAddStaminaDoneTriggerScript() {
-		return addStaminaDoneTriggerScript;
-	}
-
-	/**
-	 * スタミナ回復完了時 に実行されるGS2-Scriptを設定
-	 *
-	 * @param addStaminaDoneTriggerScript スタミナ回復完了時 に実行されるGS2-Script
-	 */
-	public void setAddStaminaDoneTriggerScript(String addStaminaDoneTriggerScript) {
-		this.addStaminaDoneTriggerScript = addStaminaDoneTriggerScript;
-	}
-
-	/**
-	 * スタミナ消費完了時 に実行されるGS2-Scriptを取得
-	 *
-	 * @return スタミナ消費完了時 に実行されるGS2-Script
-	 */
-	public String getConsumeStaminaDoneTriggerScript() {
-		return consumeStaminaDoneTriggerScript;
-	}
-
-	/**
-	 * スタミナ消費完了時 に実行されるGS2-Scriptを設定
-	 *
-	 * @param consumeStaminaDoneTriggerScript スタミナ消費完了時 に実行されるGS2-Script
-	 */
-	public void setConsumeStaminaDoneTriggerScript(String consumeStaminaDoneTriggerScript) {
-		this.consumeStaminaDoneTriggerScript = consumeStaminaDoneTriggerScript;
 	}
 
 	/**
@@ -251,6 +107,60 @@ public class StaminaPool implements Serializable {
 	}
 
 	/**
+	 * スタミナプール名を取得
+	 *
+	 * @return スタミナプール名
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * スタミナプール名を設定
+	 *
+	 * @param name スタミナプール名
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 説明文を取得
+	 *
+	 * @return 説明文
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * 説明文を設定
+	 *
+	 * @param description 説明文
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * サービスクラスを取得
+	 *
+	 * @return サービスクラス
+	 */
+	public String getServiceClass() {
+		return serviceClass;
+	}
+
+	/**
+	 * サービスクラスを設定
+	 *
+	 * @param serviceClass サービスクラス
+	 */
+	public void setServiceClass(String serviceClass) {
+		this.serviceClass = serviceClass;
+	}
+
+	/**
 	 * スタミナの回復速度(秒)を取得
 	 *
 	 * @return スタミナの回復速度(秒)
@@ -269,6 +179,114 @@ public class StaminaPool implements Serializable {
 	}
 
 	/**
+	 * スタミナ消費時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナ消費時 に実行されるGS2-Script
+	 */
+	public String getConsumeStaminaTriggerScript() {
+		return consumeStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ消費時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param consumeStaminaTriggerScript スタミナ消費時 に実行されるGS2-Script
+	 */
+	public void setConsumeStaminaTriggerScript(String consumeStaminaTriggerScript) {
+		this.consumeStaminaTriggerScript = consumeStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ消費完了時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナ消費完了時 に実行されるGS2-Script
+	 */
+	public String getConsumeStaminaDoneTriggerScript() {
+		return consumeStaminaDoneTriggerScript;
+	}
+
+	/**
+	 * スタミナ消費完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param consumeStaminaDoneTriggerScript スタミナ消費完了時 に実行されるGS2-Script
+	 */
+	public void setConsumeStaminaDoneTriggerScript(String consumeStaminaDoneTriggerScript) {
+		this.consumeStaminaDoneTriggerScript = consumeStaminaDoneTriggerScript;
+	}
+
+	/**
+	 * スタミナ回復時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナ回復時 に実行されるGS2-Script
+	 */
+	public String getAddStaminaTriggerScript() {
+		return addStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ回復時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param addStaminaTriggerScript スタミナ回復時 に実行されるGS2-Script
+	 */
+	public void setAddStaminaTriggerScript(String addStaminaTriggerScript) {
+		this.addStaminaTriggerScript = addStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ回復完了時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナ回復完了時 に実行されるGS2-Script
+	 */
+	public String getAddStaminaDoneTriggerScript() {
+		return addStaminaDoneTriggerScript;
+	}
+
+	/**
+	 * スタミナ回復完了時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param addStaminaDoneTriggerScript スタミナ回復完了時 に実行されるGS2-Script
+	 */
+	public void setAddStaminaDoneTriggerScript(String addStaminaDoneTriggerScript) {
+		this.addStaminaDoneTriggerScript = addStaminaDoneTriggerScript;
+	}
+
+	/**
+	 * スタミナの最大値取得 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナの最大値取得 に実行されるGS2-Script
+	 */
+	public String getGetMaxStaminaTriggerScript() {
+		return getMaxStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナの最大値取得 に実行されるGS2-Scriptを設定
+	 *
+	 * @param getMaxStaminaTriggerScript スタミナの最大値取得 に実行されるGS2-Script
+	 */
+	public void setGetMaxStaminaTriggerScript(String getMaxStaminaTriggerScript) {
+		this.getMaxStaminaTriggerScript = getMaxStaminaTriggerScript;
+	}
+
+	/**
+	 * 作成日時(エポック秒)を取得
+	 *
+	 * @return 作成日時(エポック秒)
+	 */
+	public Integer getCreateAt() {
+		return createAt;
+	}
+
+	/**
+	 * 作成日時(エポック秒)を設定
+	 *
+	 * @param createAt 作成日時(エポック秒)
+	 */
+	public void setCreateAt(Integer createAt) {
+		this.createAt = createAt;
+	}
+
+	/**
 	 * 最終更新日時(エポック秒)を取得
 	 *
 	 * @return 最終更新日時(エポック秒)
@@ -284,24 +302,6 @@ public class StaminaPool implements Serializable {
 	 */
 	public void setUpdateAt(Integer updateAt) {
 		this.updateAt = updateAt;
-	}
-
-	/**
-	 * スタミナプール名を取得
-	 *
-	 * @return スタミナプール名
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * スタミナプール名を設定
-	 *
-	 * @param name スタミナプール名
-	 */
-	public void setName(String name) {
-		this.name = name;
 	}
 
 }

@@ -31,11 +31,20 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 		public static final String FUNCTION = "CreateStaminaPool";
 	}
 
-	/** スタミナの最大値取得 に実行されるGS2-Script */
-	private String getMaxStaminaTriggerScript;
-
 	/** スタミナプールの名前 */
 	private String name;
+
+	/** スタミナプールの説明 */
+	private String description;
+
+	/** スタミナプールのサービスクラス */
+	private String serviceClass;
+
+	/** スタミナの回復速度(秒) */
+	private Integer increaseInterval;
+
+	/** スタミナ消費時 に実行されるGS2-Script */
+	private String consumeStaminaTriggerScript;
 
 	/** スタミナ消費完了時 に実行されるGS2-Script */
 	private String consumeStaminaDoneTriggerScript;
@@ -43,50 +52,12 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 	/** スタミナ回復時 に実行されるGS2-Script */
 	private String addStaminaTriggerScript;
 
-	/** スタミナプールのサービスクラス */
-	private String serviceClass;
-
 	/** スタミナ回復完了時 に実行されるGS2-Script */
 	private String addStaminaDoneTriggerScript;
 
-	/** スタミナ消費時 に実行されるGS2-Script */
-	private String consumeStaminaTriggerScript;
+	/** スタミナの最大値取得 に実行されるGS2-Script */
+	private String getMaxStaminaTriggerScript;
 
-	/** スタミナの回復速度(秒) */
-	private Integer increaseInterval;
-
-	/** スタミナプールの説明 */
-	private String description;
-
-
-	/**
-	 * スタミナの最大値取得 に実行されるGS2-Scriptを取得
-	 *
-	 * @return スタミナの最大値取得 に実行されるGS2-Script
-	 */
-	public String getGetMaxStaminaTriggerScript() {
-		return getMaxStaminaTriggerScript;
-	}
-
-	/**
-	 * スタミナの最大値取得 に実行されるGS2-Scriptを設定
-	 *
-	 * @param getMaxStaminaTriggerScript スタミナの最大値取得 に実行されるGS2-Script
-	 */
-	public void setGetMaxStaminaTriggerScript(String getMaxStaminaTriggerScript) {
-		this.getMaxStaminaTriggerScript = getMaxStaminaTriggerScript;
-	}
-
-	/**
-	 * スタミナの最大値取得 に実行されるGS2-Scriptを設定
-	 *
-	 * @param getMaxStaminaTriggerScript スタミナの最大値取得 に実行されるGS2-Script
-	 * @return this
-	 */
-	public CreateStaminaPoolRequest withGetMaxStaminaTriggerScript(String getMaxStaminaTriggerScript) {
-		setGetMaxStaminaTriggerScript(getMaxStaminaTriggerScript);
-		return this;
-	}
 
 	/**
 	 * スタミナプールの名前を取得
@@ -114,6 +85,122 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 	 */
 	public CreateStaminaPoolRequest withName(String name) {
 		setName(name);
+		return this;
+	}
+
+	/**
+	 * スタミナプールの説明を取得
+	 *
+	 * @return スタミナプールの説明
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * スタミナプールの説明を設定
+	 *
+	 * @param description スタミナプールの説明
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * スタミナプールの説明を設定
+	 *
+	 * @param description スタミナプールの説明
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withDescription(String description) {
+		setDescription(description);
+		return this;
+	}
+
+	/**
+	 * スタミナプールのサービスクラスを取得
+	 *
+	 * @return スタミナプールのサービスクラス
+	 */
+	public String getServiceClass() {
+		return serviceClass;
+	}
+
+	/**
+	 * スタミナプールのサービスクラスを設定
+	 *
+	 * @param serviceClass スタミナプールのサービスクラス
+	 */
+	public void setServiceClass(String serviceClass) {
+		this.serviceClass = serviceClass;
+	}
+
+	/**
+	 * スタミナプールのサービスクラスを設定
+	 *
+	 * @param serviceClass スタミナプールのサービスクラス
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withServiceClass(String serviceClass) {
+		setServiceClass(serviceClass);
+		return this;
+	}
+
+	/**
+	 * スタミナの回復速度(秒)を取得
+	 *
+	 * @return スタミナの回復速度(秒)
+	 */
+	public Integer getIncreaseInterval() {
+		return increaseInterval;
+	}
+
+	/**
+	 * スタミナの回復速度(秒)を設定
+	 *
+	 * @param increaseInterval スタミナの回復速度(秒)
+	 */
+	public void setIncreaseInterval(Integer increaseInterval) {
+		this.increaseInterval = increaseInterval;
+	}
+
+	/**
+	 * スタミナの回復速度(秒)を設定
+	 *
+	 * @param increaseInterval スタミナの回復速度(秒)
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withIncreaseInterval(Integer increaseInterval) {
+		setIncreaseInterval(increaseInterval);
+		return this;
+	}
+
+	/**
+	 * スタミナ消費時 に実行されるGS2-Scriptを取得
+	 *
+	 * @return スタミナ消費時 に実行されるGS2-Script
+	 */
+	public String getConsumeStaminaTriggerScript() {
+		return consumeStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ消費時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param consumeStaminaTriggerScript スタミナ消費時 に実行されるGS2-Script
+	 */
+	public void setConsumeStaminaTriggerScript(String consumeStaminaTriggerScript) {
+		this.consumeStaminaTriggerScript = consumeStaminaTriggerScript;
+	}
+
+	/**
+	 * スタミナ消費時 に実行されるGS2-Scriptを設定
+	 *
+	 * @param consumeStaminaTriggerScript スタミナ消費時 に実行されるGS2-Script
+	 * @return this
+	 */
+	public CreateStaminaPoolRequest withConsumeStaminaTriggerScript(String consumeStaminaTriggerScript) {
+		setConsumeStaminaTriggerScript(consumeStaminaTriggerScript);
 		return this;
 	}
 
@@ -176,35 +263,6 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 	}
 
 	/**
-	 * スタミナプールのサービスクラスを取得
-	 *
-	 * @return スタミナプールのサービスクラス
-	 */
-	public String getServiceClass() {
-		return serviceClass;
-	}
-
-	/**
-	 * スタミナプールのサービスクラスを設定
-	 *
-	 * @param serviceClass スタミナプールのサービスクラス
-	 */
-	public void setServiceClass(String serviceClass) {
-		this.serviceClass = serviceClass;
-	}
-
-	/**
-	 * スタミナプールのサービスクラスを設定
-	 *
-	 * @param serviceClass スタミナプールのサービスクラス
-	 * @return this
-	 */
-	public CreateStaminaPoolRequest withServiceClass(String serviceClass) {
-		setServiceClass(serviceClass);
-		return this;
-	}
-
-	/**
 	 * スタミナ回復完了時 に実行されるGS2-Scriptを取得
 	 *
 	 * @return スタミナ回復完了時 に実行されるGS2-Script
@@ -234,89 +292,31 @@ public class CreateStaminaPoolRequest extends Gs2BasicRequest<CreateStaminaPoolR
 	}
 
 	/**
-	 * スタミナ消費時 に実行されるGS2-Scriptを取得
+	 * スタミナの最大値取得 に実行されるGS2-Scriptを取得
 	 *
-	 * @return スタミナ消費時 に実行されるGS2-Script
+	 * @return スタミナの最大値取得 に実行されるGS2-Script
 	 */
-	public String getConsumeStaminaTriggerScript() {
-		return consumeStaminaTriggerScript;
+	public String getGetMaxStaminaTriggerScript() {
+		return getMaxStaminaTriggerScript;
 	}
 
 	/**
-	 * スタミナ消費時 に実行されるGS2-Scriptを設定
+	 * スタミナの最大値取得 に実行されるGS2-Scriptを設定
 	 *
-	 * @param consumeStaminaTriggerScript スタミナ消費時 に実行されるGS2-Script
+	 * @param getMaxStaminaTriggerScript スタミナの最大値取得 に実行されるGS2-Script
 	 */
-	public void setConsumeStaminaTriggerScript(String consumeStaminaTriggerScript) {
-		this.consumeStaminaTriggerScript = consumeStaminaTriggerScript;
+	public void setGetMaxStaminaTriggerScript(String getMaxStaminaTriggerScript) {
+		this.getMaxStaminaTriggerScript = getMaxStaminaTriggerScript;
 	}
 
 	/**
-	 * スタミナ消費時 に実行されるGS2-Scriptを設定
+	 * スタミナの最大値取得 に実行されるGS2-Scriptを設定
 	 *
-	 * @param consumeStaminaTriggerScript スタミナ消費時 に実行されるGS2-Script
+	 * @param getMaxStaminaTriggerScript スタミナの最大値取得 に実行されるGS2-Script
 	 * @return this
 	 */
-	public CreateStaminaPoolRequest withConsumeStaminaTriggerScript(String consumeStaminaTriggerScript) {
-		setConsumeStaminaTriggerScript(consumeStaminaTriggerScript);
-		return this;
-	}
-
-	/**
-	 * スタミナの回復速度(秒)を取得
-	 *
-	 * @return スタミナの回復速度(秒)
-	 */
-	public Integer getIncreaseInterval() {
-		return increaseInterval;
-	}
-
-	/**
-	 * スタミナの回復速度(秒)を設定
-	 *
-	 * @param increaseInterval スタミナの回復速度(秒)
-	 */
-	public void setIncreaseInterval(Integer increaseInterval) {
-		this.increaseInterval = increaseInterval;
-	}
-
-	/**
-	 * スタミナの回復速度(秒)を設定
-	 *
-	 * @param increaseInterval スタミナの回復速度(秒)
-	 * @return this
-	 */
-	public CreateStaminaPoolRequest withIncreaseInterval(Integer increaseInterval) {
-		setIncreaseInterval(increaseInterval);
-		return this;
-	}
-
-	/**
-	 * スタミナプールの説明を取得
-	 *
-	 * @return スタミナプールの説明
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * スタミナプールの説明を設定
-	 *
-	 * @param description スタミナプールの説明
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
-	 * スタミナプールの説明を設定
-	 *
-	 * @param description スタミナプールの説明
-	 * @return this
-	 */
-	public CreateStaminaPoolRequest withDescription(String description) {
-		setDescription(description);
+	public CreateStaminaPoolRequest withGetMaxStaminaTriggerScript(String getMaxStaminaTriggerScript) {
+		setGetMaxStaminaTriggerScript(getMaxStaminaTriggerScript);
 		return this;
 	}
 

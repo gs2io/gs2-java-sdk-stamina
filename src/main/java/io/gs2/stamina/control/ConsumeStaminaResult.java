@@ -27,30 +27,12 @@ import io.gs2.stamina.model.*;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class ConsumeStaminaResult {
 
-	/** 次にスタミナが回復する時間 */
-	private Integer nextIncreaseTimestamp;
-
 	/** スタミナ */
 	private Stamina item;
 
+	/** 次にスタミナが回復する時間 */
+	private Integer nextIncreaseTimestamp;
 
-	/**
-	 * 次にスタミナが回復する時間を取得
-	 *
-	 * @return 次にスタミナが回復する時間
-	 */
-	public Integer getNextIncreaseTimestamp() {
-		return nextIncreaseTimestamp;
-	}
-
-	/**
-	 * 次にスタミナが回復する時間を設定
-	 *
-	 * @param nextIncreaseTimestamp 次にスタミナが回復する時間
-	 */
-	public void setNextIncreaseTimestamp(Integer nextIncreaseTimestamp) {
-		this.nextIncreaseTimestamp = nextIncreaseTimestamp;
-	}
 
 	/**
 	 * スタミナを取得
@@ -68,6 +50,24 @@ public class ConsumeStaminaResult {
 	 */
 	public void setItem(Stamina item) {
 		this.item = item;
+	}
+
+	/**
+	 * 次にスタミナが回復する時間を取得
+	 *
+	 * @return 次にスタミナが回復する時間
+	 */
+	public Integer getNextIncreaseTimestamp() {
+		return nextIncreaseTimestamp;
+	}
+
+	/**
+	 * 次にスタミナが回復する時間を設定
+	 *
+	 * @param nextIncreaseTimestamp 次にスタミナが回復する時間
+	 */
+	public void setNextIncreaseTimestamp(Integer nextIncreaseTimestamp) {
+		this.nextIncreaseTimestamp = nextIncreaseTimestamp;
 	}
 
 }

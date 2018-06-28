@@ -30,54 +30,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Stamina implements Serializable {
 
-	/** 最終更新日時(エポック秒) */
-	private Integer lastUpdateAt;
-
-	/** 最大値を超えて保持しているスタミナ値 */
-	private Integer overflow;
-
 	/** ユーザID */
 	private String userId;
 
 	/** スタミナ値 */
 	private Integer value;
 
+	/** 最大値を超えて保持しているスタミナ値 */
+	private Integer overflow;
 
-	/**
-	 * 最終更新日時(エポック秒)を取得
-	 *
-	 * @return 最終更新日時(エポック秒)
-	 */
-	public Integer getLastUpdateAt() {
-		return lastUpdateAt;
-	}
+	/** 最終更新日時(エポック秒) */
+	private Integer lastUpdateAt;
 
-	/**
-	 * 最終更新日時(エポック秒)を設定
-	 *
-	 * @param lastUpdateAt 最終更新日時(エポック秒)
-	 */
-	public void setLastUpdateAt(Integer lastUpdateAt) {
-		this.lastUpdateAt = lastUpdateAt;
-	}
-
-	/**
-	 * 最大値を超えて保持しているスタミナ値を取得
-	 *
-	 * @return 最大値を超えて保持しているスタミナ値
-	 */
-	public Integer getOverflow() {
-		return overflow;
-	}
-
-	/**
-	 * 最大値を超えて保持しているスタミナ値を設定
-	 *
-	 * @param overflow 最大値を超えて保持しているスタミナ値
-	 */
-	public void setOverflow(Integer overflow) {
-		this.overflow = overflow;
-	}
 
 	/**
 	 * ユーザIDを取得
@@ -113,6 +77,42 @@ public class Stamina implements Serializable {
 	 */
 	public void setValue(Integer value) {
 		this.value = value;
+	}
+
+	/**
+	 * 最大値を超えて保持しているスタミナ値を取得
+	 *
+	 * @return 最大値を超えて保持しているスタミナ値
+	 */
+	public Integer getOverflow() {
+		return overflow;
+	}
+
+	/**
+	 * 最大値を超えて保持しているスタミナ値を設定
+	 *
+	 * @param overflow 最大値を超えて保持しているスタミナ値
+	 */
+	public void setOverflow(Integer overflow) {
+		this.overflow = overflow;
+	}
+
+	/**
+	 * 最終更新日時(エポック秒)を取得
+	 *
+	 * @return 最終更新日時(エポック秒)
+	 */
+	public Integer getLastUpdateAt() {
+		return lastUpdateAt;
+	}
+
+	/**
+	 * 最終更新日時(エポック秒)を設定
+	 *
+	 * @param lastUpdateAt 最終更新日時(エポック秒)
+	 */
+	public void setLastUpdateAt(Integer lastUpdateAt) {
+		this.lastUpdateAt = lastUpdateAt;
 	}
 
 }
